@@ -14,10 +14,10 @@
         <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-dark" type="submit">Search</button>
     </form>
-    <div class="row row-cols-2 row-cols-md-10 g-10" style="margin-top: 50px; margin-bottom: 50px">
+    <div class="row row-cols-2 row-cols-md-10 g-10" style="margin-top: 50px; margin-bottom: 60px">
         {% for photo in photos %}
             <div class="col">
-                <div class="card h-100" style="height: 100px;width: 500px; margin-bottom: 20px">
+                <div class="card h-100" style="height: 100px;width: 500px; margin-bottom: 40px">
                     <img src="{{ photo.image.url }}" class="card-img-top" style="width: 500px; height: 500px" alt="...">
                     <div class="card-body">
                         <h2 class="card-title">User: <a class="profile_info"
