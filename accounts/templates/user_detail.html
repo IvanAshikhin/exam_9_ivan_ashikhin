@@ -7,4 +7,10 @@
     <p>Email: {{ user_obj.email }}</p>
     <div class="row row-cols-1 row-cols-md-3 g-4" style="margin-top: 20px; margin-bottom: 30px">
     </div>
+    {% for photo in user_obj.favrite.all%}
+        <div class="col">
+        <div class="card h-100" style="height: 500px;width: 500px; margin-bottom: 20px">
+        <img src="{{ photo.image.url }}" class="card-img-top" style="width: 500px; height: 500px" alt="..."></div>
+        </div>
+    {% endfor %}
 {% endblock %}
