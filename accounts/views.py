@@ -1,11 +1,10 @@
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-from django.urls import reverse
-from django.views.generic import TemplateView, CreateView, DetailView, UpdateView
-from accounts.forms import LoginForm, UserChangeForm
+from django.views.generic import TemplateView, CreateView, DetailView
+from accounts.forms import LoginForm
 from accounts.forms import CustomUserCreationForm
-from photo.models import Photo
+
 
 
 class LoginView(TemplateView):

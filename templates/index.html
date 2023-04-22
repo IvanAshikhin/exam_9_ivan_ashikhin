@@ -27,9 +27,9 @@
                         <p class="bobik">Date: {{ photo.date }}</p>
                         <a class="profile_info" href={% url 'details' photo.pk %}>Detail</a>
                         {% if user.is_authenticated %}
-                            <form method="post">
+                            <form method="post" action="{% url 'add_to_favorite' photo.pk %}">
                                 {% csrf_token %}
-                                <button class="btn btn-primary add-favorite" data-post="{{ photo.pk }}">Добавить в избранное</button>
+                                <button type="submit" class="btn btn-primary">Add to favorites</button>
                             </form>
                         {% endif %}
                     </div>
@@ -37,6 +37,6 @@
             </div>
             </div>
         {% endfor %}
-{#    <script src="../static/main.js">#}
+    {#    <script src="../static/main.js">#}
     </script>
 {% endblock %}
