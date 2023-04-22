@@ -12,14 +12,17 @@
         <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-dark" type="submit">Search</button>
     </form>
-    <div class="row row-cols-1 row-cols-md-3 g-4" style="margin-top: 20px; margin-bottom: 30px">
+    <div class="row row-cols-1 row-cols-md-10 g-4" style="margin-top: 20px; margin-bottom: 30px">
         {% for photo in photos %}
             <div class="col">
-                <div class="card h-100" style="height: 170px;width: 280px;">
-                    <img src="{{ photo.image.url}}" class="card-img-top" style="width: 270px; height: 150px"
+                <div class="card h-100" style="height: 700px;width: 700px;">
+                    <img src="{{ photo.image.url}}" class="card-img-top" style="width: 700px; height: 400px"
                          alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">{{ photo.signature }}</h5>
+                        <h2 class="card-title">{{ photo.author }}</h2>
+                        <p class="signature">Signature: {{ photo.signature }}</p>
+                        <p class="bobik">Date: {{ photo.date }}</p>
+                        <a class="link" href={% url 'details' photo.pk %}>Detail</a>
                     </div>
                 </div>
             </div>

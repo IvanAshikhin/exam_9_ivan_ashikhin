@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}
+    Detail
+{% endblock %}
+{% block menu %}
+    <a class="nav-link" href="{% url 'photo_update' photo.pk %}">Update Photo</a>
+{% endblock %}
+{% block content %}
+    <img src="{{ photo.image.url}}" alt="" style="height: 600px; width: 800px;padding-top: 30px" class="img-fluid">
+    <h1 class="name">{{ photo.author }}</h1>
+    <p class="category">Signature: {{ photo.signature }}</p>
+    <p class="desc">Date: {{ photo.date }}</p>
+{% endblock %}
+
+
