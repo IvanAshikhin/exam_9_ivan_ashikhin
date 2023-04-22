@@ -1,1 +1,6 @@
-# exam_9_ivan_ashikhin root:root
+# exam_9_ivan_ashikhin 
+root:root
+1. Создать базу данных 
+2. Применить фикстуры
+3. Установить зависимости из файла requirements.txt
+4. Запускать проект
