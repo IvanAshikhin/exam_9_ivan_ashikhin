@@ -15,6 +15,8 @@ class IndexView(ListView):
     template_name = 'index.html'
     model = Photo
     context_object_name = 'photos'
+    paginate_by = 4
+    paginate_orphans = 1
 
     def get(self, request, *args, **kwargs):
         self.form = self.get_search_form()

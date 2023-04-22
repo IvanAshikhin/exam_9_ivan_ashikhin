@@ -17,7 +17,7 @@
     <div class="row row-cols-2 row-cols-md-10 g-10" style="margin-top: 50px; margin-bottom: 50px">
         {% for photo in photos %}
             <div class="col">
-                <div class="card h-100" style="height: 500px;width: 500px; margin-bottom: 20px">
+                <div class="card h-100" style="height: 100px;width: 500px; margin-bottom: 20px">
                     <img src="{{ photo.image.url }}" class="card-img-top" style="width: 500px; height: 500px" alt="...">
                     <div class="card-body">
                         <h2 class="card-title">User: <a class="profile_info"
@@ -37,6 +37,7 @@
             </div>
             </div>
         {% endfor %}
-    {#    <script src="../static/main.js">#}
-    </script>
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
 {% endblock %}
