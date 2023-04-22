@@ -6,7 +6,6 @@ from accounts.forms import LoginForm
 from accounts.forms import CustomUserCreationForm
 
 
-
 class LoginView(TemplateView):
     template_name = 'login.html'
     form = LoginForm
