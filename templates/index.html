@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}
+    Index
+{% endblock %}
+{% block menu %}
+    <li class="nav-item">
+        <a class="nav-link" href={% url 'add_photo' %}>Add Photo</a>
+    </li>
+{% endblock %}
+{% block content %}
+    <form class="d-flex" role="search" method="GET">
+        <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-dark" type="submit">Search</button>
+    </form>
+    <div class="row row-cols-1 row-cols-md-3 g-4" style="margin-top: 20px; margin-bottom: 30px">
+        {% for photo in photos %}
+            <div class="col">
+                <div class="card h-100" style="height: 170px;width: 280px;">
+                    <img src="{{ photo.image.url}}" class="card-img-top" style="width: 270px; height: 150px"
+                         alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ photo.signature }}</h5>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
