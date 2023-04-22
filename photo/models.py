@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
@@ -9,5 +10,3 @@ class Photo(models.Model):
     date = models.DateTimeField(verbose_name='Дата создания', default=timezone.now)
     author = models.ForeignKey(verbose_name='Автор', to=get_user_model(), null=False, blank=False,
                                on_delete=models.CASCADE)
-
-    

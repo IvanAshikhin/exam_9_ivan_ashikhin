@@ -3,14 +3,18 @@
     Detail
 {% endblock %}
 {% block menu %}
+    {% if photo.perms.photo_update or request.user == photo.author %}
     <a class="nav-link" href="{% url 'photo_update' photo.pk %}">Update Photo</a>
+    {% endif %}
 {% endblock %}
 {% block content %}
     <img src="{{ photo.image.url}}" alt="" style="height: 600px; width: 800px;padding-top: 30px" class="img-fluid">
     <h1 class="name">{{ photo.author }}</h1>
     <p class="category">Signature: {{ photo.signature }}</p>
     <p class="desc">Date: {{ photo.date }}</p>
+    {% if photo.perms.delete_photo or request.user == photo.author %}
     <a class="delete_prod" href="{% url 'delete_photo' photo.pk %}" style="margin-bottom: 10px">Delete</a>
+    {% endif %}
 {% endblock %}
 
 

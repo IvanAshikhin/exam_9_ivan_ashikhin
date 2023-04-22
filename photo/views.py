@@ -1,10 +1,14 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+
 from photo.forms import SearchForm, PhotoForm
 from photo.models import Photo
 
 User = get_user_model()
+
+from django.contrib.auth import get_user_model
 
 
 class IndexView(ListView):
@@ -29,11 +33,16 @@ class IndexView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        search_value = self.get_search_value()
+        if search_value:
+            users = get_user_model().objects.filter(username__icontains=search_value)
+            queryset = queryset.filter(author__in=users)
         return queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=object_list, **kwargs)
         context['form'] = self.form
+        context['search_value'] = self.search_value
         return context
 
 
@@ -52,7 +61,7 @@ class AddPhotoView(CreateView):
         return reverse('index')
 
 
-class PhotoUpdateView(UpdateView):
+class PhotoUpdateView(UserPassesTestMixin, UpdateView):
     template_name = 'update.html'
     form_class = PhotoForm
     model = Photo
@@ -60,6 +69,11 @@ class PhotoUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('details', kwargs={'pk': self.object.pk})
+
+    def test_func(self):
+        user = self.request.user
+        photo = self.get_object()
+        return self.request.user.has_perm('photo.change_photo') or user == photo.author
 
 
 class PhotoDetail(DetailView):
@@ -72,8 +86,14 @@ class PhotoDetail(DetailView):
         return context
 
 
-class PhotoDeleteView(DeleteView):
+class PhotoDeleteView(UserPassesTestMixin, DeleteView):
     template_name = 'confirm_delete.html'
     context_object_name = 'photo'
     model = Photo
+
     success_url = reverse_lazy('index')
+
+    def test_func(self):
+        user = self.request.user
+        photo = self.get_object()
+        return self.request.user.has_perm('photo.delete_photo') or user == photo.author

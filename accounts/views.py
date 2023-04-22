@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.views.generic import TemplateView, CreateView, DetailView, UpdateView
 from accounts.forms import LoginForm, UserChangeForm
 from accounts.forms import CustomUserCreationForm
@@ -40,12 +41,19 @@ class RegisterView(CreateView):
     success_url = '/'
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
+        form = self.get_form()
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect(self.success_url)
-        context = {'form': form}
+            return self.form_valid(form, request)
+        return self.form_invalid(form)
+
+    def form_valid(self, form, request):
+        response = super().form_valid(form)
+        user = form.save()
+        login(request, user)
+        return response
+
+    def form_invalid(self, form):
+        context = self.get_context_data(form=form)
         return self.render_to_response(context)
 
 
@@ -53,28 +61,3 @@ class ProfileView(LoginRequiredMixin, DetailView):
     model = get_user_model()
     template_name = 'user_detail.html'
     context_object_name = 'user_obj'
-
-
-class UserChangeView(UpdateView):
-    model = get_user_model()
-    form_class = UserChangeForm
-    template_name = 'user_change.html'
-    context_object_name = 'user_obj'
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form = self.get_form()
-        if form.is_valid():
-            return self.form_valid(form)
-        return self.form_invalid(form)
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        return response
-
-    def form_invalid(self, form):
-        context = self.get_context_data(form=form)
-        return self.render_to_response(context)
-
-    def get_success_url(self):
-        return reverse('profile', kwargs={'pk': self.object.pk})

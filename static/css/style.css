@@ -150,3 +150,8 @@ input[type="submit"] {
 .pass {
     margin-bottom: 25px;
 }
+
+.profile_info{
+    text-decoration: none;
+    color: blue
+}

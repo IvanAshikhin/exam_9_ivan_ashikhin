@@ -1,8 +1,0 @@
-{% extends "base.html" %}
-{% block title %}Edit{% endblock %}
-{% block content %}
-    <h1 class="new_guest">Update Bio</h1>
-    <form class="change_bio" action="{% url 'change' user_obj.pk %}" method="post" enctype="multipart/form-data">
-        {% include 'partial/add_form.html' with button_text='Save' %}
-    </form>
-{% endblock %}

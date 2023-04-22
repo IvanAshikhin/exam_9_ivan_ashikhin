@@ -9,26 +9,24 @@ class LoginForm(forms.Form):
 
 
 class CustomUserCreationForm(forms.ModelForm):
-    password = forms.CharField(label='Password', strip=False, required=True, widget=forms.PasswordInput)
-    password_confirm = forms.CharField(label='Password Confirm', strip=False, required=True, widget=forms.PasswordInput)
-    first_name = forms.CharField(label='First Name', required=False)
-    last_name = forms.CharField(label='Last Name', required=False)
-    email = forms.EmailField(label='Email', required=True)
+    password = forms.CharField(label='', strip=False, required=True,
+                               widget=forms.PasswordInput(attrs={'placeholder': 'Пароль'}))
+    password_confirm = forms.CharField(label='', strip=False, required=True,
+                                       widget=forms.PasswordInput(attrs={'placeholder': 'Подтвердите пароль'}))
+    username = forms.CharField(label='', required=True, widget=forms.TextInput(attrs={'placeholder': 'Логин'}))
 
     class Meta:
-        model = User
-        fields = ('username', 'password', 'password_confirm', 'email', 'first_name', 'last_name')
+        model = get_user_model()
+        fields = (
+            'username', 'password', 'password_confirm'
+        )
 
     def clean(self):
-        cleaned_date = super().clean()
-        password = cleaned_date.get('password')
-        password_confirm = cleaned_date.get('password_confirm')
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        password_confirm = cleaned_data.get('password_confirm')
         if password and password_confirm and password != password_confirm:
-            raise forms.ValidationError('Passwords dont match ')
-        first_name = cleaned_date.get('first_name')
-        last_name = cleaned_date.get('last_name')
-        if not first_name and not last_name:
-            raise forms.ValidationError('Enter at least one value from First name or Last name')
+            raise forms.ValidationError("Passwords mismatch")
 
     def save(self, commit=True):
         user = super().save(commit=False)

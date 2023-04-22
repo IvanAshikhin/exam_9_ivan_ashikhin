@@ -3,9 +3,11 @@
     Index
 {% endblock %}
 {% block menu %}
-    <li class="nav-item">
-        <a class="nav-link" href={% url 'add_photo' %}>Add Photo</a>
-    </li>
+    {% if user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'add_photo' %}">Add Photo</a>
+        </li>
+    {% endif %}
 {% endblock %}
 {% block content %}
     <form class="d-flex" role="search" method="GET">
@@ -16,16 +18,25 @@
         {% for photo in photos %}
             <div class="col">
                 <div class="card h-100" style="height: 700px;width: 700px;">
-                    <img src="{{ photo.image.url}}" class="card-img-top" style="width: 700px; height: 400px"
-                         alt="...">
+                    <img src="{{ photo.image.url }}" class="card-img-top" style="width: 697px; height: 400px" alt="...">
                     <div class="card-body">
-                        <h2 class="card-title">{{ photo.author }}</h2>
+                        <h2 class="card-title">User: <a class="profile_info"
+                                                        href="{% url 'profile' photo.author.pk %}">{{ photo.author }}</a>
+                        </h2>
                         <p class="signature">Signature: {{ photo.signature }}</p>
                         <p class="bobik">Date: {{ photo.date }}</p>
-                        <a class="link" href={% url 'details' photo.pk %}>Detail</a>
+                        <a class="profile_info" href={% url 'details' photo.pk %}>Detail</a>
+                        {% if user.is_authenticated %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <button class="btn btn-primary add-favorite" data-post="{{ photo.pk }}">Добавить в избранное</button>
+                            </form>
+                        {% endif %}
                     </div>
                 </div>
             </div>
+            </div>
         {% endfor %}
-    </div>
+{#    <script src="../static/main.js">#}
+    </script>
 {% endblock %}
