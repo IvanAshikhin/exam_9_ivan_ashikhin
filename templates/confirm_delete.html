@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Confirm delete{% endblock %}
+{% block menu %}
+{% endblock %}
+{% block content %}
+    <form action="{% url 'delete_photo' photo.pk %}" method="post">
+        <h1 class=>Are you sure?</h1>
+        {% csrf_token %}
+        <p class="submit_delete"><input type="submit" value="Delete"><a href="{% url 'index' %}" class="home_page">No</a>
+        </p>
+    </form>
+{% endblock %}
