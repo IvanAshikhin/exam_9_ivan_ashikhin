@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}User:{% endblock %}
+{% block content %}
+    <p>Login: {{ user_obj.username }}</p>
+    <p>Name: {{ user_obj.first_name }}</p>
+    <p>Second Name: {{ user_obj.last_name }}</p>
+    <p>Email: {{ user_obj.email }}</p>
+    <div class="row row-cols-1 row-cols-md-3 g-4" style="margin-top: 20px; margin-bottom: 30px">
+    </div>
+    <a href=" {% url 'change' user_obj.pk %}" class="btn btn-dark">Edit</a>
+{% endblock %}
